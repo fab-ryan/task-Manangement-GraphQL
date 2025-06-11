@@ -2,8 +2,18 @@
 ### Do not make changes to this file directly
 
 
+type Mutation {
+  createUser(email: String!, name: String!, password: String!, role: Role, status: Boolean! = true): User
+}
+
 type Query {
   allUsers: [User]
+}
+
+"""The role of the user"""
+enum Role {
+  ADMIN
+  USER
 }
 
 type User {
