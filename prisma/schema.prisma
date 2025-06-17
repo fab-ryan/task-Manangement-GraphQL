@@ -22,6 +22,57 @@ model User {
   status    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  profile   Profile? @relation()
+  tasks     Task[]
+}
+
+model Profile {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id])
+  phone             String?
+  address           String?
+  city              String?
+  state             String?
+  zip               String?
+  profilePictureUrl String?
+  isVerified        Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  status      Status   @default(PENDING)
+  category    Category @default(OTHER)
+  priority    Priority @default(LOW)
+  startDate   DateTime @default(now())
+  dueDate     DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+enum Category {
+  WORK
+  PERSONAL
+  SHOPPING
+  OTHER
+}
+
+enum Status {
+  PENDING
+  COMPLETED
+  IN_PROGRESS
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
 }
 
 enum Role {

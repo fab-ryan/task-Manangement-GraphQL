@@ -1,16 +1,47 @@
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
+import { expressMiddleware } from "@apollo/server/express4";
 import { schema } from "./schema";
 import { context } from "./schema/context";
+import { Request } from "express";
+import express from "express";
+import { authMiddleware, uploadServices } from "./utils/help";
+import multer from "multer";
 
-export const server = new ApolloServer({
+const app = express();
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 1024 * 1024 * 5, // 5MB
+  },
+});
+
+app.post("/upload", authMiddleware, upload.single("file"), uploadServices);
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("uploads"));
+
+const server = new ApolloServer({
   schema,
 });
 
 const port = process.env.PORT || 4000;
-startStandaloneServer(server, {
-  listen: { port: Number(port) },
-  context: async () => context,
-}).then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-});
+
+async function startServer() {
+  await server.start();
+
+  app.use(
+    "/graphql",
+    expressMiddleware(server, {
+      context: async ({ req }) => context({ req: req as Request }),
+    })
+  );
+
+  app.listen(port, () => {
+    console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
+  });
+}
+
+startServer();

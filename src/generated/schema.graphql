@@ -2,18 +2,203 @@
 ### Do not make changes to this file directly
 
 
+type AuthPayload {
+  """The access token of the user"""
+  accessToken: String!
+
+  """The refresh token of the user"""
+  refreshToken: String!
+}
+
+type AuthRefreshToken {
+  """The access token of the user"""
+  accessToken: String!
+}
+
+enum Category {
+  OTHER
+  PERSONAL
+  SHOPPING
+  WORK
+}
+
+type Dashboard {
+  """Number of active users"""
+  activeUsers: Int!
+
+  """Number of completed tasks"""
+  completedTasks: Int!
+
+  """Number of tasks in progress"""
+  inProgressTasks: Int!
+
+  """Number of inactive users"""
+  inactiveUsers: Int!
+
+  """Number of pending tasks"""
+  pendingTasks: Int!
+
+  """Tasks grouped by category"""
+  tasksByCategory: JSONTypes!
+
+  """Tasks grouped by priority"""
+  tasksByPriority: JSONTypes!
+
+  """Total number of tasks"""
+  totalTasks: Int!
+
+  """Total number of users"""
+  totalUsers: Int!
+}
+
+scalar DateTime
+
+"""JSON type"""
+scalar JSONTypes
+
 type Mutation {
+  activateUser(id: String!): User
+  completeTask(id: String!): Task!
+  createProfile(address: String, city: String, phone: String, state: String, userId: String!, zip: String): Profile
+  createTask(
+    category: Category!
+    description: String!
+
+    """The due date of the task"""
+    dueDate: String!
+    priority: Priority!
+
+    """The start date of the task"""
+    startDate: String!
+    title: String!
+  ): Task!
   createUser(email: String!, name: String!, password: String!, role: Role, status: Boolean! = true): User
+  deleteTask(id: String!, status: Status): Task!
+  inProgressTask(id: String!): Task!
+  login(email: String!, password: String!): AuthPayload!
+  refreshToken(refreshToken: String!): AuthRefreshToken!
+  updateTask(category: Category, description: String, dueDate: String, id: String!, priority: Priority, startDate: String, title: String): Task!
+}
+
+enum Priority {
+  HIGH
+  LOW
+  MEDIUM
+}
+
+type Profile {
+  """The address of the profile"""
+  address: String
+
+  """The city of the profile"""
+  city: String
+
+  """The date and time the profile was created"""
+  createdAt: String
+
+  """The id of the profile"""
+  id: ID!
+
+  """The is verified of the profile"""
+  isVerified: Boolean
+
+  """The phone of the profile"""
+  phone: String
+
+  """The profile picture url of the profile"""
+  profilePictureUrl: String
+
+  """The state of the profile"""
+  state: String
+
+  """The date and time the profile was updated"""
+  updatedAt: String
+
+  """The user id of the profile"""
+  userId: ID!
+
+  """The zip of the profile"""
+  zip: String
 }
 
 type Query {
-  allUsers: [User]
+  allUsers(skip: Int = 0, take: Int = 10): [User]
+  getAllTasks(filter: TaskFilter, skip: Int = 0, sort: TaskSort, take: Int = 10): [Task]
+  getDashboard: Dashboard
+  getTaskById(id: String): Task
+  getUserProfile: UserProfile
 }
 
 """The role of the user"""
 enum Role {
   ADMIN
   USER
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+enum Status {
+  COMPLETED
+  IN_PROGRESS
+  PENDING
+}
+
+type Task {
+  """The category of the task"""
+  category: Category!
+
+  """The date and time the task was created"""
+  createdAt: String!
+
+  """The description of the task"""
+  description: String!
+
+  """The due date of the task"""
+  dueDate: String!
+
+  """The id of the task"""
+  id: ID!
+
+  """The priority of the task"""
+  priority: Priority!
+
+  """The status of the task"""
+  status: Status!
+
+  """The title of the task"""
+  title: String!
+
+  """The date and time the task was updated"""
+  updatedAt: String!
+}
+
+input TaskFilter {
+  category: Category
+  description: String
+  dueDate: DateTime
+  priority: Priority
+  status: Status
+  title: String
+}
+
+input TaskSort {
+  createdAt: SortOrder
+  dueDate: SortOrder
+  updatedAt: SortOrder
+}
+
+input Upload {
+  """The encoding of the upload"""
+  encoding: String!
+
+  """The filename of the upload"""
+  filename: String!
+
+  """The mimetype of the upload"""
+  mimetype: String!
 }
 
 type User {
@@ -40,4 +225,12 @@ type User {
 
   """The date and time the user was updated"""
   updatedAt: String!
+}
+
+type UserProfile {
+  """The profile of the user"""
+  profile: Profile
+
+  """The user of the profile"""
+  user: User!
 }
