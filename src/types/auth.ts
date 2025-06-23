@@ -17,5 +17,8 @@ export const AuthRefreshToken = objectType({
     t.nonNull.string("accessToken", {
       description: "The access token of the user",
     });
+    t.nullable.string("refreshToken", {
+      description: "The refresh token of the user",
+    });
   },
 });

@@ -21,6 +21,9 @@ export const Task = objectType({
       description: "The priority of the task",
     });
     t.nonNull.string("dueDate", { description: "The due date of the task" });
+    t.nonNull.string("startDate", {
+      description: "The start date of the task",
+    });
     t.nonNull.string("createdAt", {
       description: "The date and time the task was created",
     });

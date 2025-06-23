@@ -13,6 +13,9 @@ type AuthPayload {
 type AuthRefreshToken {
   """The access token of the user"""
   accessToken: String!
+
+  """The refresh token of the user"""
+  refreshToken: String
 }
 
 enum Category {
@@ -34,6 +37,9 @@ type Dashboard {
 
   """Number of inactive users"""
   inactiveUsers: Int!
+
+  """Overall progress of the tasks"""
+  overallProgress: Int!
 
   """Number of pending tasks"""
   pendingTasks: Int!
@@ -72,7 +78,7 @@ type Mutation {
     startDate: String!
     title: String!
   ): Task!
-  createUser(email: String!, name: String!, password: String!, role: Role, status: Boolean! = true): User
+  createUser(email: String!, name: String!, password: String!, role: Role, status: Boolean! = true): AuthPayload
   deleteTask(id: String!, status: Status): Task!
   inProgressTask(id: String!): Task!
   login(email: String!, password: String!): AuthPayload!
@@ -164,6 +170,9 @@ type Task {
 
   """The priority of the task"""
   priority: Priority!
+
+  """The start date of the task"""
+  startDate: String!
 
   """The status of the task"""
   status: Status!

@@ -68,12 +68,14 @@ export interface NexusGenObjects {
   }
   AuthRefreshToken: { // root type
     accessToken: string; // String!
+    refreshToken?: string | null; // String
   }
   Dashboard: { // root type
     activeUsers: number; // Int!
     completedTasks: number; // Int!
     inProgressTasks: number; // Int!
     inactiveUsers: number; // Int!
+    overallProgress: number; // Int!
     pendingTasks: number; // Int!
     tasksByCategory: NexusGenScalars['JSONTypes']; // JSONTypes!
     tasksByPriority: NexusGenScalars['JSONTypes']; // JSONTypes!
@@ -102,6 +104,7 @@ export interface NexusGenObjects {
     dueDate: string; // String!
     id: string; // ID!
     priority: NexusGenEnums['Priority']; // Priority!
+    startDate: string; // String!
     status: NexusGenEnums['Status']; // Status!
     title: string; // String!
     updatedAt: string; // String!
@@ -139,12 +142,14 @@ export interface NexusGenFieldTypes {
   }
   AuthRefreshToken: { // field return type
     accessToken: string; // String!
+    refreshToken: string | null; // String
   }
   Dashboard: { // field return type
     activeUsers: number; // Int!
     completedTasks: number; // Int!
     inProgressTasks: number; // Int!
     inactiveUsers: number; // Int!
+    overallProgress: number; // Int!
     pendingTasks: number; // Int!
     tasksByCategory: NexusGenScalars['JSONTypes']; // JSONTypes!
     tasksByPriority: NexusGenScalars['JSONTypes']; // JSONTypes!
@@ -156,7 +161,7 @@ export interface NexusGenFieldTypes {
     completeTask: NexusGenRootTypes['Task']; // Task!
     createProfile: NexusGenRootTypes['Profile'] | null; // Profile
     createTask: NexusGenRootTypes['Task']; // Task!
-    createUser: NexusGenRootTypes['User'] | null; // User
+    createUser: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     deleteTask: NexusGenRootTypes['Task']; // Task!
     inProgressTask: NexusGenRootTypes['Task']; // Task!
     login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
@@ -190,6 +195,7 @@ export interface NexusGenFieldTypes {
     dueDate: string; // String!
     id: string; // ID!
     priority: NexusGenEnums['Priority']; // Priority!
+    startDate: string; // String!
     status: NexusGenEnums['Status']; // Status!
     title: string; // String!
     updatedAt: string; // String!
@@ -217,12 +223,14 @@ export interface NexusGenFieldTypeNames {
   }
   AuthRefreshToken: { // field return type name
     accessToken: 'String'
+    refreshToken: 'String'
   }
   Dashboard: { // field return type name
     activeUsers: 'Int'
     completedTasks: 'Int'
     inProgressTasks: 'Int'
     inactiveUsers: 'Int'
+    overallProgress: 'Int'
     pendingTasks: 'Int'
     tasksByCategory: 'JSONTypes'
     tasksByPriority: 'JSONTypes'
@@ -234,7 +242,7 @@ export interface NexusGenFieldTypeNames {
     completeTask: 'Task'
     createProfile: 'Profile'
     createTask: 'Task'
-    createUser: 'User'
+    createUser: 'AuthPayload'
     deleteTask: 'Task'
     inProgressTask: 'Task'
     login: 'AuthPayload'
@@ -268,6 +276,7 @@ export interface NexusGenFieldTypeNames {
     dueDate: 'String'
     id: 'ID'
     priority: 'Priority'
+    startDate: 'String'
     status: 'Status'
     title: 'String'
     updatedAt: 'String'

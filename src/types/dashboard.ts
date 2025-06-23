@@ -22,6 +22,9 @@ export const Dashboard = objectType({
       type: "JSONTypes",
       description: "Tasks grouped by priority",
     });
+    t.nonNull.int("overallProgress", {
+      description: "Overall progress of the tasks",
+    });
   },
 });
 

@@ -63,6 +63,7 @@ export const TaskQueries = extendType({
           createdAt: task.createdAt.toISOString(),
           updatedAt: task.updatedAt.toISOString(),
           dueDate: task.dueDate.toISOString(),
+          startDate: task.startDate.toISOString(),
           user: {
             id: task.user.id,
             name: task.user.name,

@@ -68,7 +68,14 @@ export const AuthMutation = extendType({
             expiresIn: "1h",
           }
         );
-        return { accessToken: token };
+        const newRefreshToken = jwt.sign(
+          { userId: user.id, role: user.role },
+          APP_SECRET,
+          {
+            expiresIn: "7d",
+          }
+        );
+        return { accessToken: token, refreshToken: newRefreshToken };
       },
     });
   },

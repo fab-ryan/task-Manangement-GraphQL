@@ -21,7 +21,7 @@ export const UserQueries = extendType({
         context,
         info
       ): Promise<NexusGenRootTypes["User"][]> => {
-        requireRole(["admin"], context.role);
+        requireRole(["admin", "user"], context.role);
         const users = await context.prisma.user.findMany({
           skip: (args as any)?.skip || 0,
           take: (args as any)?.take || 10,

@@ -3,13 +3,14 @@ import * as bcrypt from "bcryptjs";
 import { stringArg, booleanArg, nonNull, arg, nullable, enumType } from "nexus";
 import { NexusGenRootTypes } from "../generated/nexus";
 import { Role } from "@prisma/client";
-import { requireRole, uploadFile } from "../utils";
+import * as jwt from "jsonwebtoken";
+import { APP_SECRET, requireRole, uploadFile } from "../utils";
 
 export const UserMutation = extendType({
   type: "Mutation",
   definition(t) {
     t.field("createUser", {
-      type: "User",
+      type: "AuthPayload",
       args: {
         name: nonNull(stringArg()),
         email: nonNull(stringArg()),
@@ -23,12 +24,13 @@ export const UserMutation = extendType({
         ),
         status: nonNull(booleanArg({ default: true })),
       },
+      // @ts-ignore
       async resolve(
         root,
         args,
         context,
         info
-      ): Promise<NexusGenRootTypes["User"]> {
+      ): Promise<NexusGenRootTypes["AuthPayload"]> {
         const { name, email, password, role, status } = args;
         const currentUser = await context.prisma.user.findUnique({
           where: { email },
@@ -46,11 +48,24 @@ export const UserMutation = extendType({
             status,
           },
         });
+        const token = jwt.sign(
+          { userId: user.id, role: user.role },
+          APP_SECRET,
+          {
+            expiresIn: "1h",
+          }
+        );
+        const refreshToken = jwt.sign(
+          { userId: user.id, role: user.role },
+          APP_SECRET,
+          {
+            expiresIn: "7d",
+          }
+        );
         return {
-          ...user,
-          createdAt: user.createdAt.toISOString(),
-          updatedAt: user.updatedAt.toISOString(),
-        };
+          accessToken: token,
+          refreshToken,
+        } as unknown as NexusGenRootTypes["AuthPayload"];
       },
     });
     t.field("activateUser", {
