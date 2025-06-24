@@ -1,0 +1,17 @@
+{
+    "apps": [{
+        "name": "task-manager-backend",
+        "script": "npm",
+        "args": "start -- --host --port 5500",
+        "autorestart": true,
+        "interpreter": "none",
+        "watch": false,
+        "watch_options": {
+            "usePolling": true
+        },
+        "before_restart": "npm run build",
+        "env": {
+            "NODE_ENV": "production"
+        }
+    }]
+}

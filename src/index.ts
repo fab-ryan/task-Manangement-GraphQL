@@ -15,7 +15,6 @@ const upload = multer({
     fileSize: 1024 * 1024 * 5, // 5MB
   },
 });
-// nestjs springboot  laravel  express , nextjs?server side  graphql async [chats, ] grpc, kayber(websocket, grpc,) andandle() 2021, kablab ()  supabase 
 
 app.use(cors());
 
