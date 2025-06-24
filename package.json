@@ -20,11 +20,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts && npm run generate",
+    "dev": "ts-node-dev --respawn --transpile-only server.ts && npm run generate",
     "generate": "ts-node --transpile-only src/schema/index.ts",
     "build": "tsc",
     "prisma:generate": "npx prisma generate",
-    "migrate": "npx prisma migrate dev --name init"
+    "migrate": "npx prisma migrate dev --name init",
+    "start": "node dist/server.js",
+    "start:dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

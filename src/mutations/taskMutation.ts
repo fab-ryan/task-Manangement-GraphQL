@@ -47,14 +47,15 @@ export const TaskMutation = extendType({
             dueDate: new Date(dueDate),
             status: "IN_PROGRESS",
             userId: context.userId || "",
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           },
         });
         return {
           ...task,
           createdAt: task.createdAt.toISOString(),
           updatedAt: task.updatedAt.toISOString(),
+          startDate: task.startDate.toISOString(),
           dueDate: task.dueDate.toISOString(),
         };
       },
@@ -116,6 +117,8 @@ export const TaskMutation = extendType({
         });
         return {
           ...task,
+          status: task.status,
+          startDate: task.startDate.toISOString(),
           createdAt: task.createdAt.toISOString(),
           updatedAt: task.updatedAt.toISOString(),
           dueDate: task.dueDate.toISOString(),
@@ -138,6 +141,7 @@ export const TaskMutation = extendType({
           ...task,
           createdAt: task.createdAt.toISOString(),
           updatedAt: task.updatedAt.toISOString(),
+          startDate: task.startDate.toISOString(),
           dueDate: task.dueDate.toISOString(),
         };
       },
@@ -158,6 +162,7 @@ export const TaskMutation = extendType({
           ...task,
           createdAt: task.createdAt.toISOString(),
           updatedAt: task.updatedAt.toISOString(),
+          startDate: task.startDate.toISOString(),
           dueDate: task.dueDate.toISOString(),
         };
       },

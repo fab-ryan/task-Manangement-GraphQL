@@ -32,7 +32,7 @@ const server = new ApolloServer({
 
 const port = process.env.PORT || 4000;
 
-async function startServer() {
+export async function startServer() {
   await server.start();
 
   app.use(
@@ -46,5 +46,3 @@ async function startServer() {
     console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
   });
 }
-
-startServer();

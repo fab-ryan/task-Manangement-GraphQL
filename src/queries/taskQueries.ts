@@ -90,6 +90,7 @@ export const TaskQueries = extendType({
           ...task,
           createdAt: task?.createdAt.toISOString(),
           updatedAt: task?.updatedAt.toISOString(),
+          startDate: task?.startDate.toISOString(),
           dueDate: task?.dueDate.toISOString(),
         };
       },
