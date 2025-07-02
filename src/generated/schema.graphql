@@ -154,7 +154,7 @@ enum Status {
 
 type Task {
   """The category of the task"""
-  category: Category!
+  category: String!
 
   """The date and time the task was created"""
   createdAt: String!
@@ -185,7 +185,7 @@ type Task {
 }
 
 input TaskFilter {
-  category: Category
+  category: String
   description: String
   dueDate: DateTime
   priority: Priority

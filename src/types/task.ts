@@ -12,8 +12,7 @@ export const Task = objectType({
       type: "Status",
       description: "The status of the task",
     });
-    t.nonNull.field("category", {
-      type: "Category",
+    t.nonNull.string("category", {
       description: "The category of the task",
     });
     t.nonNull.field("priority", {
@@ -53,9 +52,7 @@ export const TaskFilter = inputObjectType({
     t.field("status", {
       type: "Status",
     });
-    t.field("category", {
-      type: "Category",
-    });
+    t.string("category");
     t.field("priority", {
       type: "Priority",
     });

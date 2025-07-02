@@ -24,7 +24,7 @@ declare global {
 
 export interface NexusGenInputs {
   TaskFilter: { // input type
-    category?: NexusGenEnums['Category'] | null; // Category
+    category?: string | null; // String
     description?: string | null; // String
     dueDate?: NexusGenScalars['DateTime'] | null; // DateTime
     priority?: NexusGenEnums['Priority'] | null; // Priority
@@ -98,7 +98,7 @@ export interface NexusGenObjects {
   }
   Query: {};
   Task: { // root type
-    category: NexusGenEnums['Category']; // Category!
+    category: string; // String!
     createdAt: string; // String!
     description: string; // String!
     dueDate: string; // String!
@@ -189,7 +189,7 @@ export interface NexusGenFieldTypes {
     getUserProfile: NexusGenRootTypes['UserProfile'] | null; // UserProfile
   }
   Task: { // field return type
-    category: NexusGenEnums['Category']; // Category!
+    category: string; // String!
     createdAt: string; // String!
     description: string; // String!
     dueDate: string; // String!
@@ -270,7 +270,7 @@ export interface NexusGenFieldTypeNames {
     getUserProfile: 'UserProfile'
   }
   Task: { // field return type name
-    category: 'Category'
+    category: 'String'
     createdAt: 'String'
     description: 'String'
     dueDate: 'String'

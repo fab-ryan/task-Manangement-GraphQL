@@ -58,6 +58,7 @@ export const TaskQueries = extendType({
             },
           },
         });
+        console.log(tasks);
         return tasks.map((task) => ({
           ...task,
           createdAt: task.createdAt.toISOString(),
